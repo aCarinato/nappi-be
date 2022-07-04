@@ -4,13 +4,14 @@ import 'dotenv/config';
 import connectDB from './config/db.js';
 import products from './routes/products.js';
 
+import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
+
 // dotenv.config()
 
 connectDB();
 
 const app = express();
 
-// fake
 const port = process.env.PORT || 8000;
 
 app.use(express.json());
@@ -30,5 +31,10 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/products', products);
+
+// If we get till these middlewares (which access req, res), it means the previous routes gave some error
+app.use(notFound);
+
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
