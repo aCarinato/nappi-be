@@ -38,6 +38,21 @@ const productSchema = new mongoose.Schema(
       required: true,
       // unique: true,
     },
+    slugIT: {
+      type: String,
+      required: true,
+      // unique: true,
+    },
+    slugEN: {
+      type: String,
+      required: true,
+      // unique: true,
+    },
+    slugDE: {
+      type: String,
+      required: true,
+      // unique: true,
+    },
     image: {
       type: String,
       required: true,
