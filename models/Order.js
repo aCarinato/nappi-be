@@ -24,6 +24,21 @@ const orderSchema = mongoose.Schema(
           required: true,
           // unique: true,
         },
+        slugIT: {
+          type: String,
+          required: true,
+          // unique: true,
+        },
+        slugEN: {
+          type: String,
+          required: true,
+          // unique: true,
+        },
+        slugDE: {
+          type: String,
+          required: true,
+          // unique: true,
+        },
         // name: { type: String, required: true },
         // nameIT: { type: String, required: true },
         // nameEN: { type: String, required: true },
