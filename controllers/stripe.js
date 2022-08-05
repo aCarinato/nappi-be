@@ -1,4 +1,4 @@
-// import User from '../models/User.js';
+import User from '../models/User.js';
 
 import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -9,9 +9,17 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export const createPaymentIntent = async (req, res) => {
   try {
     // KALORAAT
-    // console.log('EDDAIII');
+
+    // 1) find current user
+    // const user = await User.findById(req.user._id);
+
+    // 2) get user cart total
+    let totalPrice;
+    totalPrice = req.body.totalPrice;
+    // console.log(typeof totalPrice);
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 100,
+      amount: totalPrice * 100,
       currency: 'usd',
     });
     // console.log(paymentIntent.client_secret);
