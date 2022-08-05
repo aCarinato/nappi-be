@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 import products from './routes/products.js';
 import auth from './routes/auth.js';
 import order from './routes/order.js';
+import stripe from './routes/stripe.js';
 
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
 
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 app.use('/api/products', products);
 app.use('/api/auth', auth);
 app.use('/api/order', order);
+app.use('/api/stripe', stripe);
 
 // If we get till these middlewares (which access req, res), it means the previous routes gave some error
 app.use(notFound);
