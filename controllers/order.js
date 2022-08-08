@@ -30,6 +30,32 @@ export const getOrder = async (req, res) => {
   }
 };
 
+// export const getAccazzo = async (req, res) => {
+//   try {
+//     res.status(201).json({ message: 'accazzo' });
+//   } catch (err) {
+//     res.status(404); // if no specific status is set, by default it would fall back to 500
+//     return next(err);
+//   }
+// };
+
+// @desc    Retrieve order history
+// @route   GET /api/order/history
+// @access  Private
+export const getOrderHistory = async (req, res) => {
+  try {
+    console.log('deiiiii');
+    console.log(req.user);
+    const orders = await Order.find({ user: req.user._id }); //user: req.user._id
+    res.status(201).json(orders);
+    // res.status(201).json({ message: 'ciaoooooooo' });
+  } catch (err) {
+    console.log('demonio schifoso can');
+    res.status(404); // if no specific status is set, by default it would fall back to 500
+    return next(err);
+  }
+};
+
 // @desc    Pay an order
 // @route   PUT /api/order/:id/pay
 // @access  Private
