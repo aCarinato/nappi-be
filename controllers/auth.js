@@ -166,3 +166,37 @@ export const login = async (req, res) => {
     token: token,
   });
 };
+
+// @desc    Update user profile
+// @route   PUT /api/auth/update
+// @access  Private
+export const updateProfile = async (req, res) => {
+  try {
+    // console.log(req.body);
+
+    const { username, email, password } = req.body;
+
+    // // if (!name || !email || !email.includes('@') || (password && password.trim().length < 6))
+
+    const user = await User.findById(req.user._id);
+
+    user.username = username;
+    user.email = email;
+
+    let hashedPassword;
+    try {
+      hashedPassword = await bcrypt.hash(password, 12);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+
+    user.password = hashedPassword;
+
+    await user.save();
+
+    res.status(201).json({ message: 'User successfully updated' });
+  } catch (err) {
+    res.status(404); // if no specific status is set, by default it would fall back to 500
+    return next(err); // this error is passed to the middleware that handles the error
+  }
+};
