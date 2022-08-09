@@ -10,6 +10,7 @@ export const requireSignin = async (req, res, next) => {
   ) {
     // console.log('token found');
     try {
+      // console.log(req.headers.authorization);
       token = req.headers.authorization.split(' ')[1]; // Authorization: 'Bearer TOKEN'
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
       req.user = await User.findById(decodedToken._id).select('-password');
@@ -21,7 +22,7 @@ export const requireSignin = async (req, res, next) => {
   }
 
   if (!token) {
-    console.log('token NOT found');
+    console.log('token NOT found (by the middleware)');
     return res.status(401).send('Authentication failed. Token NOT found');
   }
 };
