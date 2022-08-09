@@ -40,17 +40,13 @@ export const getOrder = async (req, res) => {
 // };
 
 // @desc    Retrieve order history
-// @route   GET /api/order/history
+// @route   GET /api/order/order-history
 // @access  Private
 export const getOrderHistory = async (req, res) => {
   try {
-    console.log('deiiiii');
-    console.log(req.user);
     const orders = await Order.find({ user: req.user._id }); //user: req.user._id
     res.status(201).json(orders);
-    // res.status(201).json({ message: 'ciaoooooooo' });
   } catch (err) {
-    console.log('demonio schifoso can');
     res.status(404); // if no specific status is set, by default it would fall back to 500
     return next(err);
   }
