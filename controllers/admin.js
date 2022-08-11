@@ -52,3 +52,15 @@ export const getSummary = async (req, res) => {
     res.sendStatus(400);
   }
 };
+
+// @desc    List all orders
+// @route   GET /api/admin/orders
+// @access  Private
+export const getOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({}).populate('user', 'username');
+    res.status(201).json(orders);
+  } catch (err) {
+    res.sendStatus(400);
+  }
+};
