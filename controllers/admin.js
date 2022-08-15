@@ -64,3 +64,36 @@ export const getOrders = async (req, res) => {
     res.sendStatus(400);
   }
 };
+
+// @desc    Deliver an order
+// @route   PUT /api/admin/orders/${id}/deliver
+// @access  Private / Public
+export const deliverOrder = async (req, res) => {
+  try {
+    console.log('te sento');
+    const id = req.params.id;
+    const order = await Order.findById(id);
+
+    if (order) {
+      if (!order.isDelivered) {
+        console.log('order not delivered');
+        order.isDelivered = true;
+        order.deliveredAt = Date.now();
+        const deliveredOrder = await order.save();
+        res.json({
+          message: 'order delivered successfully',
+          // order: deliveredOrder,
+        });
+      }
+
+      // if (order.isDelivered) {
+      //   return res.json({ message: 'Error: order is already delivered' });
+      // }
+    } else {
+      res.json({ message: 'Error: order not found' });
+    }
+    // console.log(id);
+  } catch (err) {
+    res.sendStatus(400);
+  }
+};
