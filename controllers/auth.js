@@ -2,10 +2,28 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// @desc    Signup new user
-// @route   POST /api/auth/current-user
+// @desc    Get the current user to protect routes
+// @route   GET /api/auth/current-user
 // @access  Private
 export const currentUser = async (req, res) => {
+  try {
+    // IF YOU USE THE expressjwt middleware:
+    // const user = await User.findById(req.auth._id);
+
+    // IF YOU USE THE 'SELF-MADE' (requireSignin) MIDDLEWARE:
+    const user = await User.findById(req.user._id);
+    // res.json(user);
+    res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
+
+// @desc    Get the current ADMIN to protect routes
+// @route   POST /api/auth/current-admin
+// @access  Private
+export const currentAdmin = async (req, res) => {
   try {
     // IF YOU USE THE expressjwt middleware:
     // const user = await User.findById(req.auth._id);
@@ -163,6 +181,7 @@ export const login = async (req, res) => {
     username: existingUser.username,
     userId: existingUser._id,
     email: existingUser.email,
+    isAdmin: existingUser.isAdmin,
     token: token,
   });
 };
