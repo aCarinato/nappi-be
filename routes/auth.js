@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 
-import { requireSignin } from '../middlewares/checkAuth.js';
+import { requireSignin, requireAdmin } from '../middlewares/checkAuth.js';
 import {
   signup,
   login,
@@ -12,6 +12,7 @@ import {
 } from '../controllers/auth.js';
 
 router.get('/current-user', requireSignin, currentUser);
+// router.get('/current-admin', requireSignin, requireAdmin, currentUser);
 router.get('/:email', getUser);
 router.post('/signup', signup);
 router.post('/login', login);
