@@ -4,6 +4,25 @@ import Product from '../models/Product.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+export const currentUserIsAdmin = async (req, res) => {
+  try {
+    // IF YOU USE THE expressjwt middleware:
+    // const user = await User.findById(req.auth._id);
+
+    // IF YOU USE THE 'SELF-MADE' (requireSignin) MIDDLEWARE:
+    const user = await User.findById(req.user._id);
+    // res.json(user);
+    if (user.isAdmin) {
+      res.json({ ok: true });
+    } else {
+      res.json({ ok: false });
+    }
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
+
 // @desc    Summary of ecommerce performance
 // @route   GET /api/admin/summary
 // @access  Private

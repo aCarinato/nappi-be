@@ -12,7 +12,7 @@ import {
 } from '../controllers/auth.js';
 
 router.get('/current-user', requireSignin, currentUser);
-router.get('/current-admin', requireSignin, requireAdmin, currentUser);
+// router.get('/current-admin', requireSignin, requireAdmin, currentUser);
 router.get('/:email', getUser);
 router.post('/signup', signup);
 router.post('/login', login);
